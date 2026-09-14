@@ -373,7 +373,8 @@ export default function App() {
         <ForensicDossierModal
           isOpen={showDossierModal}
           onClose={() => setShowDossierModal(false)}
-          dossierData={activeRoute}
+          routeData={activeRoute || FALLBACK_ROUTE_GJ01}
+          dossierData={activeRoute || FALLBACK_ROUTE_GJ01}
         />
 
         {/* Official Sandbox Connect Modal */}
