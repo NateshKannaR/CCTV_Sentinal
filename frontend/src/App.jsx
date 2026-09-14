@@ -19,12 +19,20 @@ import WatchlistPage from './pages/WatchlistPage';
 import ScalePage from './pages/ScalePage';
 import IntegratorPage from './pages/IntegratorPage';
 
+// Offline & Vercel Resilient Data Fallbacks
+import { 
+  FALLBACK_CAMERAS, 
+  FALLBACK_WATCHLIST, 
+  FALLBACK_ALERTS, 
+  FALLBACK_ROUTE_GJ01 
+} from './data/fallbackData';
+
 export default function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [cameras, setCameras] = useState([]);
-  const [watchlist, setWatchlist] = useState([]);
-  const [alerts, setAlerts] = useState([]);
-  const [activeRoute, setActiveRoute] = useState(null);
+  const [cameras, setCameras] = useState(FALLBACK_CAMERAS);
+  const [watchlist, setWatchlist] = useState(FALLBACK_WATCHLIST);
+  const [alerts, setAlerts] = useState(FALLBACK_ALERTS);
+  const [activeRoute, setActiveRoute] = useState(FALLBACK_ROUTE_GJ01);
   const [isSearchingRoute, setIsSearchingRoute] = useState(false);
 
   // Global Modals
@@ -122,35 +130,56 @@ export default function App() {
 
   const fetchCameras = () => {
     fetch('/api/cameras')
-      .then(res => res.json())
-      .then(data => setCameras(data))
-      .catch(err => console.warn("Fetch cameras failed", err));
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(data => {
+        if (data && data.length) setCameras(data);
+        else setCameras(FALLBACK_CAMERAS);
+      })
+      .catch(() => setCameras(FALLBACK_CAMERAS));
   };
 
   const fetchWatchlist = () => {
     fetch('/api/watchlist')
-      .then(res => res.json())
-      .then(data => setWatchlist(data))
-      .catch(err => console.warn("Fetch watchlist failed", err));
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(data => {
+        if (data && data.length) setWatchlist(data);
+        else setWatchlist(FALLBACK_WATCHLIST);
+      })
+      .catch(() => setWatchlist(FALLBACK_WATCHLIST));
   };
 
   const fetchAlerts = () => {
     fetch('/api/alerts')
-      .then(res => res.json())
-      .then(data => setAlerts(data))
-      .catch(err => console.warn("Fetch alerts failed", err));
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(data => {
+        if (data && data.length) setAlerts(data);
+        else setAlerts(FALLBACK_ALERTS);
+      })
+      .catch(() => setAlerts(FALLBACK_ALERTS));
   };
 
   const handleSearchPlate = (plate) => {
     setIsSearchingRoute(true);
     fetch(`/api/trace/${plate}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
       .then(data => {
         setActiveRoute(data);
         setIsSearchingRoute(false);
       })
-      .catch(err => {
-        console.error(err);
+      .catch(() => {
+        setActiveRoute(FALLBACK_ROUTE_GJ01);
         setIsSearchingRoute(false);
       });
   };
@@ -167,6 +196,26 @@ export default function App() {
           confetti({ particleCount: 50, spread: 70, origin: { y: 0.85 } });
         }
         handleSearchPlate(plate);
+      })
+      .catch(() => {
+        const cam = cameras.find(c => (c.camera_id || c.id) === camId);
+        const simAlert = {
+          id: `ALT-${Date.now()}`,
+          plate_number: plate || "GJ01AB1234",
+          camera_id: camId,
+          camera_name: cam?.name || cam?.camera_name || camId,
+          location_name: cam?.location_name || "Gujarat State Highway",
+          timestamp: new Date().toISOString(),
+          offence_type: "Stolen Vehicle / Armed Robbery",
+          priority: "CRITICAL",
+          status: "NEW"
+        };
+        setAlerts(prev => [simAlert, ...prev]);
+        setLatestAlertToast(simAlert);
+        playAlertChime();
+        speakPoliceDispatch(simAlert);
+        confetti({ particleCount: 50, spread: 70, origin: { y: 0.85 } });
+        setActiveRoute(FALLBACK_ROUTE_GJ01);
       });
   };
 
@@ -179,6 +228,10 @@ export default function App() {
       .then(res => res.json())
       .then(saved => {
         setWatchlist(prev => [saved, ...prev]);
+      })
+      .catch(() => {
+        const newItem = { ...item, id: `WL-${Date.now()}` };
+        setWatchlist(prev => [newItem, ...prev]);
       });
   };
 
@@ -186,6 +239,9 @@ export default function App() {
     fetch(`/api/alerts/${alertId}/acknowledge`, { method: 'POST' })
       .then(res => res.json())
       .then(() => {
+        setAlerts(prev => prev.map(a => a.id === alertId ? { ...a, status: 'ACKNOWLEDGED' } : a));
+      })
+      .catch(() => {
         setAlerts(prev => prev.map(a => a.id === alertId ? { ...a, status: 'ACKNOWLEDGED' } : a));
       });
   };

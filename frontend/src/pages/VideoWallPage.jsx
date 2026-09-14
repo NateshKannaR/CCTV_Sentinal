@@ -19,6 +19,7 @@ import {
   Sun,
   Moon
 } from 'lucide-react';
+import { generateCctvSvg } from '../data/fallbackData';
 
 export default function VideoWallPage({ 
   cameras = [], 
@@ -189,7 +190,7 @@ export default function VideoWallPage({
                       alt={cam.camera_name}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        e.target.src = "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=600&q=80";
+                        e.target.src = generateCctvSvg(cam.camera_id || cam.id, cam.location_name || 'Gujarat Grid', activePlate);
                       }}
                     />
                   </div>

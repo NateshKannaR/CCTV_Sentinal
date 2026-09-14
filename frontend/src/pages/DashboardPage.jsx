@@ -18,6 +18,7 @@ import {
   CheckCircle2,
   Tv
 } from 'lucide-react';
+import { generateCctvSvg } from '../data/fallbackData';
 
 export default function DashboardPage({
   cameras = [],
@@ -149,7 +150,7 @@ export default function DashboardPage({
                     alt={cam.camera_name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     onError={(e) => {
-                      e.target.src = "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=600&q=80";
+                      e.target.src = generateCctvSvg(cam.camera_id || 'CAM-01', cam.location_name || 'Gujarat Grid', 'GJ01AB1234');
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-slate-950/40 pointer-events-none" />

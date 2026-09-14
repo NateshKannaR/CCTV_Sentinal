@@ -14,6 +14,7 @@ import {
   CheckCircle2,
   AlertCircle
 } from 'lucide-react';
+import { generateCctvSvg } from '../data/fallbackData';
 
 export default function CamerasPage({ cameras = [] }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -149,7 +150,7 @@ export default function CamerasPage({ cameras = [] }) {
                 alt={activeCamera.camera_name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  e.target.src = "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=600&q=80";
+                  e.target.src = generateCctvSvg(activeCamera.camera_id, activeCamera.location_name, 'GJ01AB1234');
                 }}
               />
               <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/70 font-mono text-[10px] text-emerald-400">

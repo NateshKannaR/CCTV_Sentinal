@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Cpu, HardDrive, Wifi, Server, Sliders, CheckCircle2, TrendingDown, Layers } from 'lucide-react';
+import { calculateScaleOffline } from '../data/fallbackData';
 
 export default function ScaleCalculator() {
   const [cameraCount, setCameraCount] = useState(80000);
@@ -9,13 +10,18 @@ export default function ScaleCalculator() {
   const [warmDays, setWarmDays] = useState(23);
   const [coldDays, setColdDays] = useState(60);
   const [edgeAiPercent, setEdgeAiPercent] = useState(80);
-  const [scaleData, setScaleData] = useState(null);
+  const [scaleData, setScaleData] = useState(() => calculateScaleOffline(80000, 'H.265', '1080p', 7, 23, 60, 80));
 
   useEffect(() => {
     fetch(`/api/scale-sizing?camera_count=${cameraCount}&codec=${codec}&resolution=${resolution}&hot_days=${hotDays}&warm_days=${warmDays}&cold_days=${coldDays}&edge_ai_percent=${edgeAiPercent}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
       .then(data => setScaleData(data))
-      .catch(err => console.error(err));
+      .catch(() => {
+        setScaleData(calculateScaleOffline(cameraCount, codec, resolution, hotDays, warmDays, coldDays, edgeAiPercent));
+      });
   }, [cameraCount, codec, resolution, hotDays, warmDays, coldDays, edgeAiPercent]);
 
   return (
