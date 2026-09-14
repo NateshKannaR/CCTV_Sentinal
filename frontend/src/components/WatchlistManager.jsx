@@ -34,22 +34,22 @@ export default function WatchlistManager({ watchlist, alerts, onAddWatchlist, on
   };
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-2xl flex flex-col gap-5">
+    <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 sm:p-5 shadow-2xl flex flex-col gap-4 sm:gap-5">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b border-slate-800 pb-3 sm:pb-4">
         <div>
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
             <ShieldAlert className="w-5 h-5 text-amber-400" />
             Watchlist Database & Live Alerting Engine
           </h2>
-          <p className="text-xs text-slate-400">
+          <p className="text-[11px] sm:text-xs text-slate-400">
             Automated cross-referencing with VAHAN, SARTHI, eGujCop, and NAFIS for real-time criminal detection
           </p>
         </div>
 
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg text-xs shadow-lg transition-colors"
+          className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2.5 rounded-lg text-xs shadow-lg transition-colors w-full sm:w-auto"
         >
           <Plus className="w-4 h-4" />
           Add Target Vehicle
@@ -64,11 +64,11 @@ export default function WatchlistManager({ watchlist, alerts, onAddWatchlist, on
               <Database className="w-4 h-4 text-blue-400" />
               Active Watchlist Records ({watchlist.length})
             </span>
-            <span className="text-slate-400 font-normal">Cross-referenced continuous AI ingestion</span>
+            <span className="text-slate-400 font-normal hidden sm:inline">Cross-referenced continuous AI ingestion</span>
           </div>
 
-          <div className="border border-slate-800 rounded-lg overflow-hidden max-h-[420px] overflow-y-auto">
-            <table className="w-full text-left text-xs">
+          <div className="border border-slate-800 rounded-lg overflow-x-auto overflow-y-auto max-h-[420px]">
+            <table className="w-full min-w-[550px] text-left text-xs">
               <thead className="bg-slate-950 text-slate-400 font-semibold border-b border-slate-800 sticky top-0">
                 <tr>
                   <th className="py-2.5 px-3">Vehicle Plate</th>
@@ -188,16 +188,16 @@ export default function WatchlistManager({ watchlist, alerts, onAddWatchlist, on
 
       {/* Add Target Vehicle Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[2000] flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-md w-full p-5 shadow-2xl flex flex-col gap-4">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[2000] flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-md w-full p-4 sm:p-5 shadow-2xl flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <h3 className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
                 <Plus className="w-4 h-4 text-blue-400" />
                 Add Target Vehicle to Watchlist
               </h3>
               <button
                 onClick={() => setShowAddModal(false)}
-                className="text-slate-400 hover:text-white text-sm font-bold"
+                className="text-slate-400 hover:text-white text-sm font-bold px-1"
               >
                 ✕
               </button>

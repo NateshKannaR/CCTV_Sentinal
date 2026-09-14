@@ -74,16 +74,16 @@ export default function IntegratorPage({ setShowSandboxModal }) {
   ];
 
   return (
-    <div className="p-6 space-y-6 max-w-[1700px] mx-auto">
+    <div className="p-3 sm:p-6 space-y-4 sm:space-y-6 max-w-[1700px] mx-auto">
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-900 to-teal-950/40 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-slate-900 via-slate-900 to-teal-950/40 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-teal-500/10 text-teal-400 rounded-xl border border-teal-500/30">
+          <div className="p-2.5 bg-teal-500/10 text-teal-400 rounded-xl border border-teal-500/30 flex-shrink-0">
             <Terminal className="w-6 h-6" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-base font-bold text-white font-mono uppercase tracking-wider">
+            <div className="flex flex-wrap items-center gap-2">
+              <h1 className="text-sm sm:text-base font-bold text-white font-mono uppercase tracking-wider">
                 Government Sandbox & Ingest Gateway Hub
               </h1>
               <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-teal-500/10 text-teal-400 border border-teal-500/30">
@@ -98,7 +98,7 @@ export default function IntegratorPage({ setShowSandboxModal }) {
 
         <button
           onClick={() => setShowSandboxModal(true)}
-          className="px-4 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-teal-500/20 transition active:scale-95"
+          className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 transition active:scale-95"
         >
           <Server className="w-4 h-4" />
           <span>CONNECT SANDBOX GATEWAY</span>
@@ -106,11 +106,11 @@ export default function IntegratorPage({ setShowSandboxModal }) {
       </div>
 
       {/* 2 Column Layout: Compliance Matrix + CLI Execution Console */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         
         {/* Left Column: Official Integrator's Guide 5 Mandatory Rules */}
         <div className="lg:col-span-7 space-y-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 shadow-xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-emerald-400" />

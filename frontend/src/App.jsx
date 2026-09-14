@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate, NavLink } from 'react-router-dom';
+import { LayoutDashboard, MapPin, Tv, Car, ShieldAlert, Menu } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 // Shared Components
@@ -29,6 +30,7 @@ import {
 
 export default function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cameras, setCameras] = useState(FALLBACK_CAMERAS);
   const [watchlist, setWatchlist] = useState(FALLBACK_WATCHLIST);
   const [alerts, setAlerts] = useState(FALLBACK_ALERTS);
@@ -258,6 +260,8 @@ export default function App() {
           setShowGapModal={setShowGapModal}
           setShowPresentationModal={setShowPresentationModal}
           alerts={alerts}
+          onToggleMobileMenu={() => setMobileMenuOpen(prev => !prev)}
+          mobileMenuOpen={mobileMenuOpen}
         />
 
         {/* Layout Body: Sidebar + Dynamic Routed Page */}
@@ -268,10 +272,12 @@ export default function App() {
             setShowPresentationModal={setShowPresentationModal}
             setShowGapModal={setShowGapModal}
             activeAlertCount={alerts.filter(a => a.status !== 'ACKNOWLEDGED').length}
+            mobileOpen={mobileMenuOpen}
+            setMobileOpen={setMobileMenuOpen}
           />
 
           {/* Main Page Route Views */}
-          <main className="flex-1 overflow-y-auto bg-slate-950">
+          <main className="flex-1 overflow-y-auto bg-slate-950 pb-20 md:pb-0">
             <Routes>
               <Route
                 path="/"
@@ -392,6 +398,83 @@ export default function App() {
           isOpen={showGapModal}
           onClose={() => setShowGapModal(false)}
         />
+
+        {/* Mobile Modern Bottom Navigation Bar */}
+        <nav className="md:hidden fixed bottom-0 inset-x-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 z-40 flex items-center justify-around py-1.5 px-1 shadow-2xl">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              `flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-medium transition-colors ${
+                isActive ? 'text-emerald-400 font-bold' : 'text-slate-400 hover:text-slate-200'
+              }`
+            }
+          >
+            <LayoutDashboard className="w-4 h-4" />
+            <span>Home</span>
+          </NavLink>
+
+          <NavLink
+            to="/cameras"
+            className={({ isActive }) =>
+              `flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-medium transition-colors ${
+                isActive ? 'text-emerald-400 font-bold' : 'text-slate-400 hover:text-slate-200'
+              }`
+            }
+          >
+            <MapPin className="w-4 h-4" />
+            <span>GIS</span>
+          </NavLink>
+
+          <NavLink
+            to="/video-wall"
+            className={({ isActive }) =>
+              `flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-medium transition-colors ${
+                isActive ? 'text-emerald-400 font-bold' : 'text-slate-400 hover:text-slate-200'
+              }`
+            }
+          >
+            <Tv className="w-4 h-4" />
+            <span>Wall</span>
+          </NavLink>
+
+          <NavLink
+            to="/tracing"
+            className={({ isActive }) =>
+              `flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-medium transition-colors ${
+                isActive ? 'text-emerald-400 font-bold' : 'text-slate-400 hover:text-slate-200'
+              }`
+            }
+          >
+            <Car className="w-4 h-4" />
+            <span>Trace</span>
+          </NavLink>
+
+          <NavLink
+            to="/watchlist"
+            className={({ isActive }) =>
+              `flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-medium transition-colors relative ${
+                isActive ? 'text-emerald-400 font-bold' : 'text-slate-400 hover:text-slate-200'
+              }`
+            }
+          >
+            <div className="relative">
+              <ShieldAlert className="w-4 h-4" />
+              {alerts.some(a => a.status !== 'ACKNOWLEDGED') && (
+                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-rose-500 animate-ping" />
+              )}
+            </div>
+            <span>Watch</span>
+          </NavLink>
+
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-medium text-slate-400 hover:text-slate-200 transition-colors"
+          >
+            <Menu className="w-4 h-4" />
+            <span>More</span>
+          </button>
+        </nav>
       </div>
     </HashRouter>
   );

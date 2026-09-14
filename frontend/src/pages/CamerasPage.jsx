@@ -21,6 +21,7 @@ export default function CamerasPage({ cameras = [] }) {
   const [selectedDept, setSelectedDept] = useState('ALL');
   const [selectedDistrict, setSelectedDistrict] = useState('ALL');
   const [activeCamera, setActiveCamera] = useState(null);
+  const [mobileTab, setMobileTab] = useState('map'); // 'map' or 'list'
 
   const departments = ['ALL', 'Gujarat Traffic Police', 'National Highway Authority', 'Municipal Corporation', 'Gujarat Maritime Board'];
   const districts = ['ALL', 'Ahmedabad', 'Gandhinagar', 'Surat', 'Vadodara', 'Rajkot'];
@@ -36,9 +37,34 @@ export default function CamerasPage({ cameras = [] }) {
   });
 
   return (
-    <div className="h-[calc(100vh-4rem)] flex flex-col lg:flex-row overflow-hidden">
-      {/* Left Camera Directory Sidebar (360px) */}
-      <div className="w-full lg:w-96 bg-slate-900 border-r border-slate-800 flex flex-col h-full z-10">
+    <div className="h-[calc(100vh-4rem)] flex flex-col overflow-hidden">
+      {/* Mobile Top View Switcher */}
+      <div className="lg:hidden flex border-b border-slate-800 bg-slate-900 px-3 py-2 gap-2 z-20 flex-shrink-0">
+        <button
+          onClick={() => setMobileTab('map')}
+          className={`flex-1 py-1.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition ${
+            mobileTab === 'map'
+              ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20'
+              : 'bg-slate-800 text-slate-400'
+          }`}
+        >
+          <MapPin className="w-3.5 h-3.5" /> Interactive Map
+        </button>
+        <button
+          onClick={() => setMobileTab('list')}
+          className={`flex-1 py-1.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition ${
+            mobileTab === 'list'
+              ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20'
+              : 'bg-slate-800 text-slate-400'
+          }`}
+        >
+          <Video className="w-3.5 h-3.5" /> Nodes List ({filteredCameras.length})
+        </button>
+      </div>
+
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
+        {/* Left Camera Directory Sidebar (360px) */}
+        <div className={`${mobileTab === 'list' ? 'flex' : 'hidden'} lg:flex w-full lg:w-96 bg-slate-900 border-r border-slate-800 flex-col h-full z-10 flex-shrink-0`}>
         {/* Header & Search */}
         <div className="p-4 border-b border-slate-800 space-y-3">
           <div className="flex items-center justify-between">
@@ -93,7 +119,10 @@ export default function CamerasPage({ cameras = [] }) {
               return (
                 <div
                   key={cam.camera_id}
-                  onClick={() => setActiveCamera(cam)}
+                  onClick={() => {
+                    setActiveCamera(cam);
+                    setMobileTab('map');
+                  }}
                   className={`p-3 rounded-xl border transition cursor-pointer ${
                     isSelected
                       ? 'bg-emerald-950/30 border-emerald-500 text-white shadow-lg shadow-emerald-950/40'
@@ -120,7 +149,7 @@ export default function CamerasPage({ cameras = [] }) {
       </div>
 
       {/* Center & Right GIS Map Container */}
-      <div className="flex-1 relative h-full">
+      <div className={`${mobileTab === 'map' ? 'flex' : 'hidden'} lg:flex flex-1 relative h-full bg-slate-950`}>
         <GisMap
           cameras={filteredCameras}
           selectedCamera={activeCamera}
@@ -129,7 +158,7 @@ export default function CamerasPage({ cameras = [] }) {
 
         {/* Slide-over Live Stream & Inspector Drawer (when activeCamera is set) */}
         {activeCamera && (
-          <div className="absolute top-4 right-4 w-96 max-w-[calc(100vw-2rem)] bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-2xl shadow-2xl p-4 z-[1000] space-y-3">
+          <div className="absolute bottom-4 inset-x-3 sm:bottom-auto sm:inset-x-auto sm:top-4 sm:right-4 w-auto sm:w-96 max-w-[calc(100vw-1.5rem)] bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-2xl shadow-2xl p-3 sm:p-4 z-[1000] space-y-2.5 sm:space-y-3 max-h-[75vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-2 border-b border-slate-800">
               <div className="flex items-center gap-2">
                 <Radio className="w-4 h-4 text-rose-500 animate-pulse" />
@@ -188,6 +217,7 @@ export default function CamerasPage({ cameras = [] }) {
             </div>
           </div>
         )}
+      </div>
       </div>
     </div>
   );

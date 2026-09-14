@@ -52,39 +52,39 @@ export default function DashboardPage({
   ];
 
   return (
-    <div className="p-6 space-y-6 max-w-[1600px] mx-auto">
+    <div className="p-3 sm:p-6 space-y-4 sm:space-y-6 max-w-[1600px] mx-auto">
       {/* Top Welcome & Threat Alert Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/50 border border-slate-800 p-6 shadow-xl">
+      <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/50 border border-slate-800 p-4 sm:p-6 shadow-xl">
         <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent pointer-events-none" />
         
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 relative z-10">
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+            <div className="flex flex-wrap items-center gap-2 mb-2">
+              <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-ping" />
                 STATEWIDE SITUATION MONITORING
               </span>
-              <span className="text-xs text-slate-400 font-mono">CODE LEVEL: DELTA-SECURE</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-mono">CODE: DELTA-SECURE</span>
             </div>
-            <h1 className="text-2xl lg:text-3xl font-black text-white tracking-tight">
+            <h1 className="text-lg sm:text-2xl lg:text-3xl font-black text-white tracking-tight">
               Gujarat State Police Integrated CCTV Operations Center
             </h1>
-            <p className="text-sm text-slate-400 mt-1 max-w-3xl">
+            <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-3xl leading-relaxed">
               Unified surveillance grid across 26 Gujarat Government departments. Continuous cross-referencing against eGujCop, VAHAN, and NAFIS registries with automated Section 65B forensic chain of custody.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
             <button
               onClick={() => navigate('/tracing')}
-              className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95"
+              className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition active:scale-95"
             >
               <Car className="w-4 h-4" />
               <span>TRACE GJ01AB1234</span>
             </button>
             <button
               onClick={() => navigate('/video-wall')}
-              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs flex items-center gap-2 border border-slate-700 transition"
+              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs flex items-center justify-center gap-2 border border-slate-700 transition"
             >
               <Tv className="w-4 h-4 text-cyan-400" />
               <span>LAUNCH VIDEO WALL</span>
@@ -94,22 +94,22 @@ export default function DashboardPage({
       </div>
 
       {/* 4 Primary Status KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         {quickStats.map((stat, i) => {
           const Icon = stat.icon;
           return (
-            <div key={i} className="p-5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition relative overflow-hidden group">
+            <div key={i} className="p-3.5 sm:p-5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition relative overflow-hidden group">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-400">{stat.label}</span>
-                <div className={`p-2 rounded-lg bg-${stat.color}-500/10 border border-${stat.color}-500/20 text-${stat.color}-400 group-hover:scale-110 transition-transform`}>
-                  <Icon className="w-4 h-4" />
+                <span className="text-[11px] sm:text-xs font-semibold text-slate-400 truncate pr-1">{stat.label}</span>
+                <div className={`p-1.5 sm:p-2 rounded-lg bg-${stat.color}-500/10 border border-${stat.color}-500/20 text-${stat.color}-400 group-hover:scale-110 transition-transform flex-shrink-0`}>
+                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
               </div>
-              <div className="mt-3">
-                <div className="text-2xl font-black text-white font-mono">{stat.value}</div>
-                <div className="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
-                  <span className={`w-1.5 h-1.5 rounded-full bg-${stat.color}-400`}></span>
-                  <span>{stat.sub}</span>
+              <div className="mt-2 sm:mt-3">
+                <div className="text-lg sm:text-2xl font-black text-white font-mono">{stat.value}</div>
+                <div className="text-[10px] sm:text-xs text-slate-400 mt-0.5 flex items-center gap-1.5 truncate">
+                  <span className={`w-1.5 h-1.5 rounded-full bg-${stat.color}-400 flex-shrink-0`}></span>
+                  <span className="truncate">{stat.sub}</span>
                 </div>
               </div>
             </div>
@@ -118,7 +118,7 @@ export default function DashboardPage({
       </div>
 
       {/* Main Grid: Live Matrix Preview + Realtime Threat Alerts */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         
         {/* Left Column (8 cols): Tactical Feeds & Route Map Highlights */}
         <div className="lg:col-span-8 space-y-6">

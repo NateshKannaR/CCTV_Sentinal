@@ -48,22 +48,22 @@ export default function RouteReconstructor({ activeRoute = FALLBACK_ROUTE_GJ01, 
   };
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-2xl flex flex-col gap-5">
+    <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 sm:p-5 shadow-2xl flex flex-col gap-4 sm:gap-5">
       {/* Search Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b border-slate-800 pb-3 sm:pb-4">
         <div>
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <Navigation className="w-5 h-5 text-red-500" />
+          <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <Navigation className="w-4 h-4 sm:w-5 sm:h-5 text-red-500" />
             Designated Vehicle Route Reconstruction
           </h2>
-          <p className="text-xs text-slate-400">
+          <p className="text-[11px] sm:text-xs text-slate-400">
             State-wide chronological movement history, trajectory mapping, and predictive interception planner
           </p>
         </div>
 
         {/* Quick Sample Selector */}
-        <div className="flex items-center gap-2 text-xs">
-          <span className="text-slate-400">Quick Test:</span>
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs">
+          <span className="text-slate-400 text-[11px]">Quick Test:</span>
           {samplePlates.map(p => (
             <button
               key={p}
@@ -71,7 +71,7 @@ export default function RouteReconstructor({ activeRoute = FALLBACK_ROUTE_GJ01, 
                 setSearchInput(p);
                 onSearchPlate(p);
               }}
-              className={`px-2.5 py-1 rounded text-xs font-mono font-bold transition-all ${
+              className={`px-2 sm:px-2.5 py-1 rounded text-[11px] sm:text-xs font-mono font-bold transition-all ${
                 currentRoute?.plate_number === p
                   ? 'bg-red-600 text-white shadow-md shadow-red-500/30'
                   : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
@@ -85,23 +85,23 @@ export default function RouteReconstructor({ activeRoute = FALLBACK_ROUTE_GJ01, 
 
       {/* Plate Search Input & Legal Dossier Button */}
       <div className="flex flex-col sm:flex-row gap-2">
-        <form onSubmit={handleSubmit} className="flex flex-1 gap-2">
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row flex-1 gap-2">
           <div className="relative flex-1">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <span className="text-xs font-bold text-amber-400 bg-black/40 px-1 rounded border border-amber-500/40">IND</span>
+              <span className="text-[10px] font-bold text-amber-400 bg-black/40 px-1 rounded border border-amber-500/40">IND</span>
             </div>
             <input
               type="text"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value.toUpperCase())}
               placeholder="Enter Vehicle Reg No (e.g. GJ01AB1234)"
-              className="w-full pl-14 pr-4 py-2.5 bg-slate-950 border border-slate-700 rounded-lg text-white font-mono font-bold text-sm tracking-wider focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+              className="w-full pl-12 sm:pl-14 pr-4 py-2.5 bg-slate-950 border border-slate-700 rounded-lg text-white font-mono font-bold text-xs sm:text-sm tracking-wider focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
             />
           </div>
           <button
             type="submit"
             disabled={isSearching}
-            className="flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold px-5 py-2.5 rounded-lg text-sm shadow-lg shadow-red-600/20 transition-all disabled:opacity-50"
+            className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold px-5 py-2.5 rounded-lg text-xs sm:text-sm shadow-lg shadow-red-600/20 transition-all disabled:opacity-50"
           >
             <Search className="w-4 h-4" />
             {isSearching ? 'Reconstructing...' : 'Trace Vehicle'}
@@ -111,7 +111,7 @@ export default function RouteReconstructor({ activeRoute = FALLBACK_ROUTE_GJ01, 
         {totalDetections > 0 && (
           <button
             onClick={() => onOpenDossier && onOpenDossier(currentRoute)}
-            className="flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 font-bold px-4 py-2.5 rounded-lg text-xs transition-all whitespace-nowrap"
+            className="w-full sm:w-auto flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 font-bold px-4 py-2.5 rounded-lg text-xs transition-all whitespace-nowrap"
             title="Generate Official Section 65B Indian Evidence Act Certified Forensic Docket"
           >
             <FileCheck className="w-4 h-4 text-emerald-400" />
@@ -279,28 +279,31 @@ export default function RouteReconstructor({ activeRoute = FALLBACK_ROUTE_GJ01, 
             {hops.map((hop, idx) => (
               <div
                 key={hop.sequence || idx}
-                className="bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-lg p-3 flex items-center justify-between gap-4 transition-all"
+                className="bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-lg p-2.5 sm:p-3 flex items-center justify-between gap-2 sm:gap-4 transition-all"
               >
                 {/* Sequence & Cam Info */}
-                <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-full bg-slate-800 border border-red-500/80 text-red-400 flex items-center justify-center font-bold text-xs font-mono flex-shrink-0">
+                <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-800 border border-red-500/80 text-red-400 flex items-center justify-center font-bold text-[11px] sm:text-xs font-mono flex-shrink-0">
                     {hop.sequence || idx + 1}
                   </div>
-                  <div>
-                    <div className="text-xs font-bold text-white flex items-center gap-2">
-                      {hop.camera_name}
-                      <span className="text-[10px] font-mono text-slate-400 bg-slate-800 px-1.5 py-0.2 rounded">
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs font-bold text-white flex items-center gap-1.5 truncate">
+                      <span className="truncate">{hop.camera_name}</span>
+                      <span className="text-[10px] font-mono text-slate-400 bg-slate-800 px-1 py-0.2 rounded flex-shrink-0">
                         {hop.camera_id}
                       </span>
                     </div>
-                    <div className="text-[11px] text-slate-400 mt-0.5">
+                    <div className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 truncate">
                       📍 {hop.location_name}
+                    </div>
+                    <div className="sm:hidden text-[10px] text-slate-400 font-mono mt-0.5 truncate">
+                      ⏱️ {hop.timestamp?.split(' ')[1] || hop.timestamp} • {hop.speed_kmh} km/h
                     </div>
                   </div>
                 </div>
 
                 {/* Telemetry Numbers */}
-                <div className="flex items-center gap-4 text-xs font-mono">
+                <div className="flex items-center gap-2 sm:gap-4 text-xs font-mono flex-shrink-0">
                   <div className="text-right hidden sm:block">
                     <div className="text-slate-200 font-bold">{hop.timestamp}</div>
                     <div className="text-[10px] text-slate-400">
@@ -311,7 +314,7 @@ export default function RouteReconstructor({ activeRoute = FALLBACK_ROUTE_GJ01, 
                   {/* Snapshot Thumbnail Preview */}
                   <button
                     onClick={() => setSelectedSnapshot(hop)}
-                    className="relative w-14 h-9 bg-slate-800 rounded overflow-hidden border border-slate-700 hover:border-red-400 group cursor-pointer flex-shrink-0"
+                    className="relative w-12 h-8 sm:w-14 sm:h-9 bg-slate-800 rounded overflow-hidden border border-slate-700 hover:border-red-400 group cursor-pointer flex-shrink-0"
                     title="Inspect Snapshot"
                   >
                     <img
@@ -340,12 +343,12 @@ export default function RouteReconstructor({ activeRoute = FALLBACK_ROUTE_GJ01, 
 
       {/* Snapshot Evidence Modal */}
       {selectedSnapshot && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[2000] flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-2xl w-full p-4 shadow-2xl flex flex-col gap-3">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[2000] flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-2xl w-full p-3 sm:p-4 shadow-2xl flex flex-col gap-3 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-              <div className="text-sm font-bold text-white flex items-center gap-2">
+              <div className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
                 <span>CCTV Snapshot Evidence</span>
-                <span className="text-xs font-mono bg-red-600 text-white px-2 py-0.5 rounded">
+                <span className="text-[10px] sm:text-xs font-mono bg-red-600 text-white px-2 py-0.5 rounded">
                   {selectedSnapshot.camera_id}
                 </span>
               </div>
@@ -367,8 +370,8 @@ export default function RouteReconstructor({ activeRoute = FALLBACK_ROUTE_GJ01, 
                 }}
               />
             </div>
-            <div className="text-xs text-slate-300 flex justify-between">
-              <div>📍 {selectedSnapshot.location_name}</div>
+            <div className="text-[11px] sm:text-xs text-slate-300 flex flex-col sm:flex-row sm:justify-between gap-1">
+              <div className="truncate">📍 {selectedSnapshot.location_name}</div>
               <div className="font-mono">Timestamp: {selectedSnapshot.timestamp}</div>
             </div>
           </div>

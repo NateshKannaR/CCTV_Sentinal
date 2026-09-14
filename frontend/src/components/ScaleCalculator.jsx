@@ -25,20 +25,20 @@ export default function ScaleCalculator() {
   }, [cameraCount, codec, resolution, hotDays, warmDays, coldDays, edgeAiPercent]);
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-2xl flex flex-col gap-6">
+    <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 sm:p-5 shadow-2xl flex flex-col gap-4 sm:gap-6">
       {/* Header */}
-      <div className="border-b border-slate-800 pb-4">
-        <h2 className="text-lg font-bold text-white flex items-center gap-2">
+      <div className="border-b border-slate-800 pb-3 sm:pb-4">
+        <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
           <Server className="w-5 h-5 text-indigo-400" />
           Statewide Scalability & Infrastructure Sizing Engine (~80,000 Cameras)
         </h2>
-        <p className="text-xs text-slate-400">
+        <p className="text-[11px] sm:text-xs text-slate-400 mt-0.5">
           Hardware sizing, GPU cluster allocation, low-bandwidth edge architecture, and tiered storage model for Gujarat State
         </p>
       </div>
 
       {/* Interactive Sliders */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 bg-slate-950 p-3.5 sm:p-4 rounded-xl border border-slate-800 text-xs">
         {/* Camera Count Slider */}
         <div className="flex flex-col gap-1.5">
           <div className="flex justify-between font-semibold text-slate-300">
