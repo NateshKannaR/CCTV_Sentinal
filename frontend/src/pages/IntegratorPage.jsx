@@ -177,6 +177,50 @@ export default function IntegratorPage({ setShowSandboxModal }) {
             </div>
           </div>
 
+          {/* MongoDB Atlas Cloud Database Panel */}
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+                <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+                  MongoDB Atlas Cloud
+                </h4>
+              </div>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                CONNECTED
+              </span>
+            </div>
+
+            <div className="space-y-2 text-xs font-mono">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-slate-950/80 border border-slate-800">
+                <span className="text-slate-400">CLUSTER:</span>
+                <span className="text-emerald-400 truncate max-w-[200px]">cluster0.wwp3oig.mongodb.net</span>
+              </div>
+              <div className="flex items-center justify-between p-2 rounded-lg bg-slate-950/80 border border-slate-800">
+                <span className="text-slate-400">DATABASE:</span>
+                <span className="text-cyan-400 font-bold">sentinel_cctv</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <div className="p-2 rounded-lg bg-slate-950/80 border border-slate-800 text-center">
+                  <div className="text-[10px] text-slate-500">CAMERAS</div>
+                  <div className="text-sm font-bold text-white">50</div>
+                </div>
+                <div className="p-2 rounded-lg bg-slate-950/80 border border-slate-800 text-center">
+                  <div className="text-[10px] text-slate-500">WATCHLIST</div>
+                  <div className="text-sm font-bold text-rose-400">10</div>
+                </div>
+                <div className="p-2 rounded-lg bg-slate-950/80 border border-slate-800 text-center">
+                  <div className="text-[10px] text-slate-500">DETECTIONS</div>
+                  <div className="text-sm font-bold text-cyan-400">15</div>
+                </div>
+                <div className="p-2 rounded-lg bg-slate-950/80 border border-slate-800 text-center">
+                  <div className="text-[10px] text-slate-500">ALERTS</div>
+                  <div className="text-sm font-bold text-amber-400">10</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Sandbox Server Status */}
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
             <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider font-mono">

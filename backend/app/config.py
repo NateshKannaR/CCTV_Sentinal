@@ -19,5 +19,10 @@ RTSP_TRANSPORT = "tcp"
 API_HOST = os.getenv("HOST", "0.0.0.0")
 API_PORT = int(os.getenv("PORT", "8080"))
 
+# MongoDB Atlas Connection
+MONGODB_URI = os.getenv("MONGODB_URI", "mongodb+srv://Natesh:Natesh@cluster0.wwp3oig.mongodb.net/?retryWrites=true&w=majority")
+MONGODB_DB_NAME = os.getenv("MONGODB_DB_NAME", "sentinel_cctv")
+
 # Indian Number Plate Regex Pattern
 PLATE_REGEX = r"^[A-Z]{2}[0-9]{1,2}[A-Z]{1,3}[0-9]{4}$"
+

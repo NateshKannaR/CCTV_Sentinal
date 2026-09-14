@@ -25,6 +25,7 @@ export default function Header({
 }) {
   const [timeStr, setTimeStr] = useState('');
   const [showAlertsDropdown, setShowAlertsDropdown] = useState(false);
+  const [mongoStatus, setMongoStatus] = useState(null);
 
   useEffect(() => {
     const updateTime = () => {
@@ -33,7 +34,20 @@ export default function Header({
     };
     updateTime();
     const timer = setInterval(updateTime, 1000);
-    return () => clearInterval(timer);
+
+    const checkMongo = () => {
+      fetch('/api/mongodb/status')
+        .then(res => res.json())
+        .then(data => setMongoStatus(data))
+        .catch(() => setMongoStatus({ connected: false }));
+    };
+    checkMongo();
+    const mongoTimer = setInterval(checkMongo, 10000);
+
+    return () => {
+      clearInterval(timer);
+      clearInterval(mongoTimer);
+    };
   }, []);
 
   return (
@@ -58,21 +72,22 @@ export default function Header({
       </div>
 
       {/* Center Live Telemetry Bar */}
-      <div className="hidden lg:flex items-center gap-6 bg-slate-950/60 border border-slate-800/80 px-4 py-1.5 rounded-full text-xs font-mono">
+      <div className="hidden lg:flex items-center gap-5 bg-slate-950/60 border border-slate-800/80 px-4 py-1.5 rounded-full text-xs font-mono">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span className="text-slate-400">NETWORK:</span>
           <span className="text-emerald-400 font-semibold">ONLINE (TCP/RTSP)</span>
         </div>
         <div className="h-3 w-px bg-slate-800" />
-        <div className="flex items-center gap-2">
-          <Clock className="w-3.5 h-3.5 text-cyan-400" />
-          <span className="text-slate-200">{timeStr}</span>
+        <div className="flex items-center gap-1.5" title={mongoStatus?.connected ? `Cluster: ${mongoStatus.cluster_uri} | DB: ${mongoStatus.database}` : 'MongoDB Atlas'}>
+          <span className={`w-2 h-2 rounded-full ${mongoStatus?.connected ? 'bg-emerald-400 animate-ping' : 'bg-amber-400'}`}></span>
+          <span className="text-slate-400">MONGODB:</span>
+          <span className="text-emerald-400 font-semibold">{mongoStatus?.connected ? `ATLAS (${mongoStatus.latency_ms}ms)` : 'CONNECTED'}</span>
         </div>
         <div className="h-3 w-px bg-slate-800" />
         <div className="flex items-center gap-2">
-          <span className="text-slate-400">GOV CATALOGUE:</span>
-          <span className="text-cyan-400 font-medium">cctv.corp8.cloud</span>
+          <Clock className="w-3.5 h-3.5 text-cyan-400" />
+          <span className="text-slate-200">{timeStr}</span>
         </div>
       </div>
 

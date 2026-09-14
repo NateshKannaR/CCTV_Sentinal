@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 import asyncio
 from pathlib import Path
 from typing import List, Optional, Dict, Any
@@ -13,18 +14,21 @@ from backend.app.config import SNAPSHOTS_DIR, API_HOST, API_PORT
 from backend.app.db import get_db_connection, init_db
 from backend.app.generate_snapshots import generate_sample_snapshots
 from backend.app.models import CameraModel, WatchlistModel, RouteReconstructionResponse, GapAnalysisResponse
+from backend.app.mongo_manager import mongo_manager
+from backend.app.anpr_engine import normalize_indian_plate, process_detection
 from backend.app.route_tracer import reconstruct_vehicle_route
-from backend.app.anpr_engine import process_detection, normalize_indian_plate
+from backend.app.ingest_worker import SentinelIngestClient, MockStreamGenerator
 from backend.app.scale_calculator import calculate_scale_architecture
-from backend.app.ingest_worker import MockStreamGenerator, SentinelIngestClient
+
+logger = logging.getLogger("sentinel.api")
 
 app = FastAPI(
-    title="Gujarat Police Sentinel - Unified Video Management & Analytics",
-    description="Backend API for statewide CCTV integration, ANPR analytics, vehicle route reconstruction, and real-time watchlist correlation.",
-    version="2.0.0"
+    title="Gujarat Police Sentinel - Statewide CCTV Analytics API",
+    description="Unified Video Management System & Real-Time Crime Analytics Grid",
+    version="2.6.0"
 )
 
-# Enable CORS for frontend development
+# CORS configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -64,6 +68,15 @@ sentinel_client = SentinelIngestClient()
 def startup_event():
     init_db()
     generate_sample_snapshots()
+    try:
+        mongo_manager.sync_from_sqlite()
+    except Exception as e:
+        logger.warning(f"MongoDB initial sync warning: {e}")
+
+@app.get("/api/mongodb/status")
+def get_mongodb_status():
+    """Returns real-time connection status, cluster health, and document counts for MongoDB Atlas."""
+    return mongo_manager.get_status()
 
 # ----------------- Model 1: Registry & GIS Endpoints -----------------
 
@@ -237,6 +250,13 @@ def add_to_watchlist(item: WatchlistModel):
     conn.close()
     item.id = w_id
     item.plate_number = clean_plate
+
+    # Dual-write to MongoDB Atlas
+    try:
+        mongo_manager.insert_watchlist(item.dict())
+    except Exception as e:
+        logger.warning(f"MongoDB watchlist sync warning: {e}")
+
     return item
 
 @app.get("/api/alerts")
@@ -255,6 +275,13 @@ def acknowledge_alert(alert_id: str, officer_id: str = "OFFICER-PCR-42"):
     cursor.execute("UPDATE alerts SET status = 'ACKNOWLEDGED', acknowledged_by = ? WHERE id = ?", (officer_id, alert_id))
     conn.commit()
     conn.close()
+
+    # Sync acknowledgment to MongoDB Atlas
+    try:
+        mongo_manager.acknowledge_alert(alert_id)
+    except Exception as e:
+        logger.warning(f"MongoDB alert acknowledge sync warning: {e}")
+
     return {"status": "success", "alert_id": alert_id, "acknowledged_by": officer_id}
 
 @app.post("/api/simulate-detection")
@@ -279,6 +306,12 @@ async def simulate_live_detection(
         snapshot_url=snapshot_url,
         speed_kmh=speed_kmh
     )
+
+    # Dual-write to MongoDB Atlas
+    if det:
+        mongo_manager.insert_detection(det)
+    if alert:
+        mongo_manager.insert_alert(alert)
 
     # If watchlist matched, push alert over WebSocket instantly
     if alert:
