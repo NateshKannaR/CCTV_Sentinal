@@ -44,13 +44,13 @@ export const FALLBACK_ALERTS = [
 
 export const FALLBACK_ROUTE_GJ01 = {
   plate_number: "GJ01AB1234",
-  total_sightings: 7,
+  total_detections: 7,
   first_seen: "2026-09-14 10:14:00",
   last_seen: "2026-09-14 11:36:00",
   total_distance_km: 38.6,
   average_speed_kmh: 58.4,
-  primary_direction: "Southbound (Towards Vadodara / Surat NH-48)",
-  watchlist_entry: {
+  status: "Target locked across 7 state surveillance checkpoints",
+  watchlist_info: {
     plate_number: "GJ01AB1234",
     owner_name: "Vikram Rathore",
     vehicle_model: "Toyota Fortuner (White)",
@@ -60,24 +60,41 @@ export const FALLBACK_ROUTE_GJ01 = {
     priority: "CRITICAL",
     source_db: "eGujCop"
   },
-  sightings: [
-    { camera_id: "CAM-GN-01", camera_name: "Police Bhavan Gate 1", location_name: "Sector 18, Gandhinagar", timestamp: "2026-09-14 10:14:00", latitude: 23.2156, longitude: 72.6369, speed_kmh: 0.0, snapshot_url: "/snapshots/gj01_1.jpg", pts_ms: 0 },
-    { camera_id: "CAM-GN-03", camera_name: "Infocity Circle North", location_name: "Infocity, Gandhinagar", timestamp: "2026-09-14 10:28:00", latitude: 23.1903, longitude: 72.6288, speed_kmh: 55.0, snapshot_url: "/snapshots/gj01_2.jpg", pts_ms: 840000 },
-    { camera_id: "CAM-AHM-01", camera_name: "Vaishno Devi Circle Northbound", location_name: "SG Highway, Ahmedabad", timestamp: "2026-09-14 10:42:00", latitude: 23.1368, longitude: 72.5441, speed_kmh: 62.0, snapshot_url: "/snapshots/gj01_3.jpg", pts_ms: 1680000 },
-    { camera_id: "CAM-AHM-02", camera_name: "Gota Flyover Checkpoint", location_name: "SG Highway, Gota, Ahmedabad", timestamp: "2026-09-14 10:51:00", latitude: 23.1090, longitude: 72.5360, speed_kmh: 58.0, snapshot_url: "/snapshots/gj01_4.jpg", pts_ms: 2220000 },
-    { camera_id: "CAM-AHM-04", camera_name: "ISKCON Cross Road Flyover", location_name: "SG Highway, ISKCON, Ahmedabad", timestamp: "2026-09-14 11:05:00", latitude: 23.0278, longitude: 72.5065, speed_kmh: 65.0, snapshot_url: "/snapshots/gj01_5.jpg", pts_ms: 3060000 },
-    { camera_id: "CAM-AHM-07", camera_name: "Nehrunagar Circle Traffic Post", location_name: "Nehrunagar, Ambawadi, Ahmedabad", timestamp: "2026-09-14 11:20:00", latitude: 23.0189, longitude: 72.5442, speed_kmh: 52.0, snapshot_url: "/snapshots/gj01_6.jpg", pts_ms: 3960000 },
-    { camera_id: "CAM-AHM-10", camera_name: "Narol Circle Toll Junction", location_name: "Narol-Sarkhej Highway, Ahmedabad", timestamp: "2026-09-14 11:36:00", latitude: 22.9734, longitude: 72.5925, speed_kmh: 60.0, snapshot_url: "/snapshots/gj01_7.jpg", pts_ms: 4920000 }
+  hops: [
+    { sequence: 1, camera_id: "CAM-GN-01", camera_name: "Police Bhavan Gate 1", location_name: "Sector 18, Gandhinagar", timestamp: "2026-09-14 10:14:00", latitude: 23.2156, longitude: 72.6369, speed_kmh: 0.0, distance_km: 0.0, snapshot_url: "/snapshots/gj01_1.jpg", pts_ms: 0 },
+    { sequence: 2, camera_id: "CAM-GN-03", camera_name: "Infocity Circle North", location_name: "Infocity, Gandhinagar", timestamp: "2026-09-14 10:28:00", latitude: 23.1903, longitude: 72.6288, speed_kmh: 55.0, distance_km: 4.2, snapshot_url: "/snapshots/gj01_2.jpg", pts_ms: 840000 },
+    { sequence: 3, camera_id: "CAM-AHM-01", camera_name: "Vaishno Devi Circle Northbound", location_name: "SG Highway, Ahmedabad", timestamp: "2026-09-14 10:42:00", latitude: 23.1368, longitude: 72.5441, speed_kmh: 62.0, distance_km: 9.8, snapshot_url: "/snapshots/gj01_3.jpg", pts_ms: 1680000 },
+    { sequence: 4, camera_id: "CAM-AHM-02", camera_name: "Gota Flyover Checkpoint", location_name: "SG Highway, Gota, Ahmedabad", timestamp: "2026-09-14 10:51:00", latitude: 23.1090, longitude: 72.5360, speed_kmh: 58.0, distance_km: 4.1, snapshot_url: "/snapshots/gj01_4.jpg", pts_ms: 2220000 },
+    { sequence: 5, camera_id: "CAM-AHM-04", camera_name: "ISKCON Cross Road Flyover", location_name: "SG Highway, ISKCON, Ahmedabad", timestamp: "2026-09-14 11:05:00", latitude: 23.0278, longitude: 72.5065, speed_kmh: 65.0, distance_km: 8.5, snapshot_url: "/snapshots/gj01_5.jpg", pts_ms: 3060000 },
+    { sequence: 6, camera_id: "CAM-AHM-07", camera_name: "Nehrunagar Circle Traffic Post", location_name: "Nehrunagar, Ambawadi, Ahmedabad", timestamp: "2026-09-14 11:20:00", latitude: 23.0189, longitude: 72.5442, speed_kmh: 52.0, distance_km: 4.8, snapshot_url: "/snapshots/gj01_6.jpg", pts_ms: 3960000 },
+    { sequence: 7, camera_id: "CAM-AHM-10", camera_name: "Narol Circle Toll Junction", location_name: "Narol-Sarkhej Highway, Ahmedabad", timestamp: "2026-09-14 11:36:00", latitude: 22.9734, longitude: 72.5925, speed_kmh: 60.0, distance_km: 7.2, snapshot_url: "/snapshots/gj01_7.jpg", pts_ms: 4920000 }
   ],
-  predictive_interception: {
-    heading_compass: "172° (South)",
-    confidence_score: 94.2,
-    intercept_zones: [
-      { checkpoint_name: "Bareja Expressway Toll Plaza", distance_km: 12.4, eta_minutes: 13, district: "Ahmedabad Rural", dispatch_recommended: true },
-      { checkpoint_name: "Kheda Bypass Border Checkpost", distance_km: 26.8, eta_minutes: 27, district: "Kheda", dispatch_recommended: true },
-      { checkpoint_name: "Nadiad South Toll Gate", distance_km: 44.5, eta_minutes: 44, district: "Kheda", dispatch_recommended: false }
-    ]
-  }
+  predicted_interception: [
+    {
+      checkpoint: "Aslali Circle Toll Plaza (NH-48)",
+      district: "Ahmedabad Rural",
+      distance_km: 6.4,
+      eta_minutes: 6,
+      tactical_action: "Close Boom Barriers #3 & #4; Standby PCR-14 with Tire Deflation Spikes",
+      probability_percent: 94
+    },
+    {
+      checkpoint: "Bareja Police Checkpost",
+      district: "Ahmedabad Rural",
+      distance_km: 14.8,
+      eta_minutes: 15,
+      tactical_action: "Deploy Barricades; Divert Civilian Traffic to Service Road",
+      probability_percent: 86
+    },
+    {
+      checkpoint: "NE-1 Ahmedabad-Vadodara Expressway Entry",
+      district: "Kheda",
+      distance_km: 28.5,
+      eta_minutes: 29,
+      tactical_action: "Alert Expressway Patrol Team Delta; Set up Spikes at Toll Lanes",
+      probability_percent: 78
+    }
+  ]
 };
 
 // Generates an authentic tactical CCTV security camera SVG Data URI

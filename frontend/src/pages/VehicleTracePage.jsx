@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import RouteReconstructor from '../components/RouteReconstructor';
 import { Car, Shield, FileText, CheckCircle2, AlertOctagon } from 'lucide-react';
+import { FALLBACK_ROUTE_GJ01 } from '../data/fallbackData';
 
 export default function VehicleTracePage({
-  activeRoute,
+  activeRoute = FALLBACK_ROUTE_GJ01,
   onSearchPlate,
   isSearching,
   setShowDossierModal

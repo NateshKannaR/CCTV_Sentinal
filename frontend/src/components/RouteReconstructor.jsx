@@ -15,15 +15,25 @@ import {
   FileCheck,
   Radio
 } from 'lucide-react';
+import { generateCctvSvg, FALLBACK_ROUTE_GJ01 } from '../data/fallbackData';
 
-export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearching, onOpenDossier }) {
+export default function RouteReconstructor({ activeRoute = FALLBACK_ROUTE_GJ01, onSearchPlate, isSearching, onOpenDossier }) {
   const [searchInput, setSearchInput] = useState('GJ01AB1234');
   const [selectedSnapshot, setSelectedSnapshot] = useState(null);
   const [dispatchedCheckpoints, setDispatchedCheckpoints] = useState({});
 
+  // Defensive field resolution to prevent blank page crashes
+  const currentRoute = activeRoute || FALLBACK_ROUTE_GJ01;
+  const hops = currentRoute?.hops || currentRoute?.sightings || [];
+  const totalDetections = currentRoute?.total_detections ?? currentRoute?.total_sightings ?? hops.length;
+  const watchlistInfo = currentRoute?.watchlist_info || currentRoute?.watchlist_entry;
+  const predictedInterception = Array.isArray(currentRoute?.predicted_interception)
+    ? currentRoute.predicted_interception
+    : [];
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (searchInput.trim()) {
+    if (searchInput.trim() && onSearchPlate) {
       onSearchPlate(searchInput.trim());
     }
   };
@@ -62,7 +72,7 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
                 onSearchPlate(p);
               }}
               className={`px-2.5 py-1 rounded text-xs font-mono font-bold transition-all ${
-                activeRoute?.plate_number === p
+                currentRoute?.plate_number === p
                   ? 'bg-red-600 text-white shadow-md shadow-red-500/30'
                   : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
               }`}
@@ -98,9 +108,9 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
           </button>
         </form>
 
-        {activeRoute && activeRoute.total_detections > 0 && (
+        {totalDetections > 0 && (
           <button
-            onClick={() => onOpenDossier && onOpenDossier(activeRoute)}
+            onClick={() => onOpenDossier && onOpenDossier(currentRoute)}
             className="flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 font-bold px-4 py-2.5 rounded-lg text-xs transition-all whitespace-nowrap"
             title="Generate Official Section 65B Indian Evidence Act Certified Forensic Docket"
           >
@@ -111,7 +121,7 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
       </div>
 
       {/* Watchlist Match Banner (If Vehicle is Flagged) */}
-      {activeRoute?.watchlist_info && (
+      {watchlistInfo && (
         <div className="bg-red-950/40 border border-red-500/60 rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-sm">
           <div className="flex items-start gap-3">
             <div className="p-2 bg-red-500/20 rounded text-red-400 mt-0.5">
@@ -119,16 +129,16 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
             </div>
             <div>
               <div className="font-bold text-red-300 flex items-center gap-2">
-                CRITICAL WATCHLIST HIT: {activeRoute.watchlist_info.offence_type}
+                CRITICAL WATCHLIST HIT: {watchlistInfo.offence_type || 'Flagged Target'}
                 <span className="text-xs bg-red-600 text-white px-2 py-0.5 rounded-full font-bold">
-                  {activeRoute.watchlist_info.priority}
+                  {watchlistInfo.priority || 'CRITICAL'}
                 </span>
               </div>
               <div className="text-xs text-slate-300 mt-1">
-                Owner/Suspect: <b>{activeRoute.watchlist_info.owner_name}</b> | Model: <b>{activeRoute.watchlist_info.vehicle_model}</b>
+                Owner/Suspect: <b>{watchlistInfo.owner_name || 'Unknown'}</b> | Model: <b>{watchlistInfo.vehicle_model || 'Unknown'}</b>
               </div>
               <div className="text-xs text-slate-400 mt-0.5">
-                FIR: <b>{activeRoute.watchlist_info.fir_number}</b> ({activeRoute.watchlist_info.police_station}) | Source DB: <b>{activeRoute.watchlist_info.source_db}</b>
+                FIR: <b>{watchlistInfo.fir_number || 'N/A'}</b> ({watchlistInfo.police_station || 'HQ'}) | Source DB: <b>{watchlistInfo.source_db || 'State CCTNS'}</b>
               </div>
             </div>
           </div>
@@ -139,7 +149,7 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
       )}
 
       {/* Route Summary Telemetry Cards */}
-      {activeRoute && activeRoute.total_detections > 0 && (
+      {totalDetections > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
           <div className="bg-slate-950/80 border border-slate-800 border-t-2 border-t-emerald-500 rounded-xl p-3.5 shadow-lg relative overflow-hidden group hover:border-slate-700 transition-all">
             <div className="flex items-center justify-between">
@@ -149,7 +159,7 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
               </div>
             </div>
             <div className="text-2xl font-black text-white mt-1.5 font-mono tracking-tight">
-              {activeRoute.total_detections} <span className="text-xs text-emerald-400 font-sans font-semibold">Nodes</span>
+              {totalDetections} <span className="text-xs text-emerald-400 font-sans font-semibold">Nodes</span>
             </div>
             <div className="text-[10px] text-slate-500 mt-1 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -165,7 +175,7 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
               </div>
             </div>
             <div className="text-2xl font-black text-white mt-1.5 font-mono tracking-tight">
-              {activeRoute.total_distance_km} <span className="text-xs text-cyan-400 font-sans font-semibold">km</span>
+              {currentRoute?.total_distance_km ?? 0} <span className="text-xs text-cyan-400 font-sans font-semibold">km</span>
             </div>
             <div className="text-[10px] text-slate-500 mt-1">Haversine Spatial Graph</div>
           </div>
@@ -178,7 +188,7 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
               </div>
             </div>
             <div className="text-2xl font-black text-white mt-1.5 font-mono tracking-tight">
-              {activeRoute.average_speed_kmh} <span className="text-xs text-amber-400 font-sans font-semibold">km/h</span>
+              {currentRoute?.average_speed_kmh ?? 0} <span className="text-xs text-amber-400 font-sans font-semibold">km/h</span>
             </div>
             <div className="text-[10px] text-slate-500 mt-1">Inter-Hop Monotonic PTS</div>
           </div>
@@ -191,7 +201,9 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
               </div>
             </div>
             <div className="text-lg font-black text-white mt-2 font-mono truncate">
-              {activeRoute.hops.length > 1 ? `${activeRoute.hops[activeRoute.hops.length - 1].timestamp.split(' ')[1]}` : 'Single Sight'}
+              {hops.length > 1 && hops[hops.length - 1]?.timestamp
+                ? `${hops[hops.length - 1].timestamp.split(' ')[1] || hops[hops.length - 1].timestamp}`
+                : 'Single Sight'}
             </div>
             <div className="text-[10px] text-slate-500 mt-1">First to Last Sighting</div>
           </div>
@@ -199,7 +211,7 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
       )}
 
       {/* UNIQUE FEATURE: AI Predictive Interception & Roadblock Planner */}
-      {activeRoute?.predicted_interception && activeRoute.predicted_interception.length > 0 && (
+      {predictedInterception.length > 0 && (
         <div className="bg-blue-950/20 border border-blue-500/40 rounded-xl p-4 flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -214,7 +226,7 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {activeRoute.predicted_interception.map((plan, i) => {
+            {predictedInterception.map((plan, i) => {
               const isDispatched = dispatchedCheckpoints[plan.checkpoint];
 
               return (
@@ -256,7 +268,7 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
       )}
 
       {/* Chronological Movement Hop Timeline */}
-      {activeRoute && activeRoute.hops.length > 0 ? (
+      {hops.length > 0 ? (
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between text-xs font-semibold text-slate-300">
             <span>Chronological Checkpoint Sequence</span>
@@ -264,15 +276,15 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
           </div>
 
           <div className="space-y-2.5 max-h-[360px] overflow-y-auto pr-1">
-            {activeRoute.hops.map((hop) => (
+            {hops.map((hop, idx) => (
               <div
-                key={hop.sequence}
+                key={hop.sequence || idx}
                 className="bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-lg p-3 flex items-center justify-between gap-4 transition-all"
               >
                 {/* Sequence & Cam Info */}
                 <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-full bg-slate-800 border border-red-500/80 text-red-400 flex items-center justify-center font-bold text-xs font-mono">
-                    {hop.sequence}
+                  <div className="w-7 h-7 rounded-full bg-slate-800 border border-red-500/80 text-red-400 flex items-center justify-center font-bold text-xs font-mono flex-shrink-0">
+                    {hop.sequence || idx + 1}
                   </div>
                   <div>
                     <div className="text-xs font-bold text-white flex items-center gap-2">
@@ -297,18 +309,24 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
                   </div>
 
                   {/* Snapshot Thumbnail Preview */}
-                  {hop.snapshot_url && (
-                    <button
-                      onClick={() => setSelectedSnapshot(hop)}
-                      className="relative w-14 h-9 bg-slate-800 rounded overflow-hidden border border-slate-700 hover:border-red-400 group cursor-pointer"
-                      title="Inspect Snapshot"
-                    >
-                      <img src={hop.snapshot_url} alt="Crop" className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                        <Eye className="w-3.5 h-3.5 text-white" />
-                      </div>
-                    </button>
-                  )}
+                  <button
+                    onClick={() => setSelectedSnapshot(hop)}
+                    className="relative w-14 h-9 bg-slate-800 rounded overflow-hidden border border-slate-700 hover:border-red-400 group cursor-pointer flex-shrink-0"
+                    title="Inspect Snapshot"
+                  >
+                    <img
+                      src={hop.snapshot_url || generateCctvSvg(hop.camera_id, hop.location_name, currentRoute?.plate_number)}
+                      alt="Crop"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = generateCctvSvg(hop.camera_id, hop.location_name, currentRoute?.plate_number);
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                      <Eye className="w-3.5 h-3.5 text-white" />
+                    </div>
+                  </button>
                 </div>
               </div>
             ))}
@@ -338,8 +356,16 @@ export default function RouteReconstructor({ activeRoute, onSearchPlate, isSearc
                 ✕
               </button>
             </div>
-            <div className="aspect-video bg-black rounded-lg overflow-hidden border border-slate-800">
-              <img src={selectedSnapshot.snapshot_url} alt="Evidence" className="w-full h-full object-contain" />
+            <div className="aspect-video bg-black rounded-lg overflow-hidden border border-slate-800 flex items-center justify-center">
+              <img
+                src={selectedSnapshot.snapshot_url || generateCctvSvg(selectedSnapshot.camera_id, selectedSnapshot.location_name, currentRoute?.plate_number)}
+                alt="Evidence"
+                className="w-full h-full object-contain"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = generateCctvSvg(selectedSnapshot.camera_id, selectedSnapshot.location_name, currentRoute?.plate_number);
+                }}
+              />
             </div>
             <div className="text-xs text-slate-300 flex justify-between">
               <div>📍 {selectedSnapshot.location_name}</div>
