@@ -30,9 +30,10 @@ export default function Sidebar({
   const navItems = [
     { to: '/', label: 'Overview', icon: LayoutDashboard, badge: null },
     { to: '/cameras', label: 'GIS Cameras', icon: MapPin, badge: '50 LIVE' },
-    { to: '/video-wall', label: 'Video Wall', icon: Tv, badge: '9-GRID' },
+    { to: '/video-wall', label: 'Video Wall', icon: Tv, badge: 'REAL GRID' },
     { to: '/tracing', label: 'Vehicle Tracer', icon: Car, badge: 'AI LOCK' },
     { to: '/watchlist', label: 'Watchlist', icon: ShieldAlert, badge: activeAlertCount > 0 ? `${activeAlertCount} HITS` : null, alert: activeAlertCount > 0 },
+    { to: '/evidence', label: 'Evidence Vault', icon: Shield, badge: 'BSA 2023' },
     { to: '/scale', label: '80K Scale Engine', icon: Sliders, badge: null },
     { to: '/integrator', label: 'Sandbox / Ingest', icon: Terminal, badge: 'RTSP' },
   ];

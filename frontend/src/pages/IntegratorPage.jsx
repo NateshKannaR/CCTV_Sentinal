@@ -24,19 +24,19 @@ export default function IntegratorPage({ setShowSandboxModal }) {
 
   const commands = [
     {
-      title: "1. Query Live Sandbox Camera Catalogue",
-      cmd: "curl -s https://cctv.corp8.cloud/api/ingest | jq '.[0]'",
-      desc: "Fetches dynamic camera list with stream IDs, locations, and codecs"
+      title: "1. Query Live Sentinel Camera Catalogue",
+      cmd: "curl -u 'nateshnkraja@gmail.com:NYYR-SQ5F-TQ7N' -s https://cctv.corp8.cloud/cameras.json | jq '.[0]'",
+      desc: "Fetches dynamic 30-camera set from Sentinel Control Room portal"
     },
     {
-      title: "2. Run Automated Live Feed Compliance Runner",
-      cmd: "python3 backend/app/live_feed_runner.py --host https://cctv.corp8.cloud",
-      desc: "Connects via RTSP TCP, tracks monotonic PTS timestamps, detects loop resets, and exports evaluation CSV"
+      title: "2. Live Stream Direct RTSP TCP Ingestion (OpenCV)",
+      cmd: 'ffplay -rtsp_transport tcp "rtsp://nateshnkraja%40gmail.com:NYYR-SQ5F-TQ7N@103.250.160.189:8554/stream/cam01"',
+      desc: "Connects strictly forcing TCP transport over port 8554 with monotonic PTS tracking"
     },
     {
-      title: "3. Probe Live RTSP Stream via FFprobe",
-      cmd: "ffprobe -rtsp_transport tcp -i rtsp://cctv.corp8.cloud:8554/stream/CAM-001",
-      desc: "Inspects video stream PTS, keyframe interval, and H.264/H.265 profile"
+      title: "3. Probe Video Stream Codec Profile (FFprobe)",
+      cmd: 'ffprobe -rtsp_transport tcp "rtsp://nateshnkraja%40gmail.com:NYYR-SQ5F-TQ7N@103.250.160.189:8554/stream/cam01"',
+      desc: "Inspects monotonic PTS presentation timestamps and hardware decode stream parameters"
     }
   ];
 

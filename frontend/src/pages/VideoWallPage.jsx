@@ -27,16 +27,17 @@ export default function VideoWallPage({
   activePlate = 'GJ01AB1234' 
 }) {
   const [layout, setLayout] = useState('2x2'); // '1x1', '2x2', '3x3'
+  const [streamMode, setStreamMode] = useState('real'); // 'real' (direct RTSP relay) or 'sim' (ANPR HUD)
   const [activeCamIds, setActiveCamIds] = useState([
-    'CAM-GN-01',
-    'CAM-AHM-01',
-    'CAM-AHM-04',
-    'CAM-SUR-05',
-    'CAM-GN-03',
-    'CAM-VAD-02',
-    'CAM-RJK-01',
-    'CAM-AHM-02',
-    'CAM-SUR-01'
+    'cam01',
+    'cam02',
+    'cam04',
+    'cam14',
+    'cam06',
+    'cam12',
+    'cam18',
+    'cam22',
+    'cam30'
   ]);
   const [nightVision, setNightVision] = useState(false);
   const [selectedCamIndex, setSelectedCamIndex] = useState(0);
@@ -81,6 +82,29 @@ export default function VideoWallPage({
 
         {/* Matrix Controls & Actions */}
         <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-between sm:justify-end">
+          {/* Stream Mode Switcher */}
+          <div className="bg-slate-950/80 p-1 rounded-xl flex items-center gap-1 border border-slate-800">
+            <button
+              onClick={() => setStreamMode('real')}
+              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-mono font-bold flex items-center gap-1.5 transition ${
+                streamMode === 'real' ? 'bg-emerald-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-white'
+              }`}
+              title="Streams genuine live RTSP over TCP directly from Gujarat Police camera grid (103.250.160.189:8554)"
+            >
+              <Radio className="w-3.5 h-3.5 animate-pulse" />
+              <span>REAL CAMERA GRID</span>
+            </button>
+            <button
+              onClick={() => setStreamMode('sim')}
+              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-mono font-bold flex items-center gap-1.5 transition ${
+                streamMode === 'sim' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Tv className="w-3.5 h-3.5" />
+              <span>ANPR HUD SIM</span>
+            </button>
+          </div>
+
           {/* Night Vision / IR Toggle */}
           <button
             onClick={() => setNightVision(!nightVision)}
@@ -186,13 +210,22 @@ export default function VideoWallPage({
                     nightVision ? 'filter invert brightness-125 contrast-150 hue-rotate-90' : ''
                   }`}>
                     <img
-                      src={`/api/stream/${cam.camera_id || cam.id}?target_plate=${activePlate}`}
+                      src={
+                        streamMode === 'real'
+                          ? `/api/stream/live/${cam.camera_id || cam.id}`
+                          : `/api/stream/${cam.camera_id || cam.id}?target_plate=${activePlate}`
+                      }
                       alt={cam.camera_name}
                       className="w-full h-full object-cover"
                       onError={(e) => {
                         e.target.src = generateCctvSvg(cam.camera_id || cam.id, cam.location_name || 'Gujarat Grid', activePlate);
                       }}
                     />
+                    {streamMode === 'real' && (
+                      <div className="absolute top-10 left-3 bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-mono text-[10px] px-2 py-0.5 rounded shadow">
+                        ● LIVE RTSP (103.250.160.189:8554)
+                      </div>
+                    )}
                   </div>
 
                   {/* Bottom Telemetry & Test Action Bar */}

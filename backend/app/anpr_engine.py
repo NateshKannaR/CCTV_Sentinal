@@ -44,18 +44,32 @@ def process_detection(camera_id: str, raw_plate: str, vehicle_type: str = "Car",
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     det_id = f"DET-{uuid.uuid4().hex[:8].upper()}"
 
+    # Calculate Inter-Camera Transit Speed
+    from backend.app.speed_calculator import SpeedCalculator
+    inter_speed, is_speed_violation, speed_details = SpeedCalculator.calculate_inter_camera_speed(
+        license_plate=plate,
+        current_camera_id=camera_id,
+        current_timestamp_str=now_str
+    )
+
+    final_speed = inter_speed if inter_speed is not None else (speed_kmh or 58.0)
+    is_speeding = is_speed_violation or (final_speed > 80.0)
+
     cursor.execute("""
     INSERT INTO detections (id, camera_id, plate_number, vehicle_type, confidence, timestamp, pts_ms, snapshot_url, speed_kmh, is_watchlist_match)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """, (det_id, camera_id, plate, vehicle_type, confidence, now_str, 0, snapshot_url, speed_kmh or 52.0, is_match))
+    """, (det_id, camera_id, plate, vehicle_type, confidence, now_str, 0, snapshot_url, final_speed, is_match))
 
     alert_dict = None
-    if is_match:
+    if is_match or is_speeding:
         alert_id = f"ALT-{uuid.uuid4().hex[:8].upper()}"
+        offence = wl_match["offence_type"] if is_match else f"Inter-Camera Speeding ({final_speed:.1f} km/h)"
+        priority = wl_match["priority"] if is_match else "HIGH"
+
         cursor.execute("""
         INSERT INTO alerts (id, detection_id, plate_number, camera_id, camera_name, location_name, timestamp, offence_type, priority, snapshot_url, status)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (alert_id, det_id, plate, camera_id, cam_name, loc_name, now_str, wl_match["offence_type"], wl_match["priority"], snapshot_url, "NEW"))
+        """, (alert_id, det_id, plate, camera_id, cam_name, loc_name, now_str, offence, priority, snapshot_url, "NEW"))
 
         alert_dict = {
             "id": alert_id,
@@ -65,16 +79,33 @@ def process_detection(camera_id: str, raw_plate: str, vehicle_type: str = "Car",
             "camera_name": cam_name,
             "location_name": loc_name,
             "timestamp": now_str,
-            "offence_type": wl_match["offence_type"],
-            "owner_name": wl_match["owner_name"],
-            "vehicle_model": wl_match["vehicle_model"],
-            "fir_number": wl_match["fir_number"],
-            "police_station": wl_match["police_station"],
-            "priority": wl_match["priority"],
-            "source_db": wl_match["source_db"],
+            "offence_type": offence,
+            "owner_name": wl_match["owner_name"] if wl_match else "Registered Owner",
+            "vehicle_model": wl_match["vehicle_model"] if wl_match else vehicle_type,
+            "fir_number": wl_match["fir_number"] if wl_match else "N/A",
+            "police_station": wl_match["police_station"] if wl_match else "Traffic Control HQ",
+            "priority": priority,
+            "source_db": wl_match["source_db"] if wl_match else "RADAR_SPEED_ENFORCEMENT",
             "snapshot_url": snapshot_url,
             "status": "NEW"
         }
+
+        # Auto-issue Section 63 BSA 2023 Digital Evidence Certificate
+        from backend.app.evidence_service import EvidenceService
+        try:
+            v_type = "WATCHLIST_CRITICAL_INTERCEPT" if is_match else "SPEED_VIOLATION"
+            fine = 5000 if is_match else 2000
+            EvidenceService.create_certificate(
+                detection_id=det_id,
+                license_plate=plate,
+                camera_id=camera_id,
+                violation_type=v_type,
+                speed_recorded_kmh=final_speed,
+                speed_limit_kmh=80.0,
+                fine_amount_inr=fine
+            )
+        except Exception as e_cert:
+            print(f"Certificate generation notice: {e_cert}")
 
     conn.commit()
     conn.close()

@@ -2,30 +2,46 @@
 // Guarantees 100% functionality on Vercel, Netlify, or serverless deployments
 
 export const FALLBACK_CAMERAS = [
+  // Real Sentinel Live Camera Grid (cam01 to cam30)
+  { id: "cam01", camera_id: "cam01", camera_name: "01 Chiman bhai Bridge", name: "01 Chiman bhai Bridge", department: "Home Department (Police)", location_name: "Chimanbhai Bridge, Ahmedabad", district: "Ahmedabad", latitude: 23.0645, longitude: 72.5810, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam02", camera_id: "cam02", camera_name: "02 Janpath", name: "02 Janpath", department: "Municipal Corporation", location_name: "Janpath Road, Ahmedabad", district: "Ahmedabad", latitude: 23.0305, longitude: 72.5650, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam03", camera_id: "cam03", camera_name: "03 O.N.G.C. Office", name: "03 O.N.G.C. Office", department: "Home Department (Police)", location_name: "ONGC Complex, Ahmedabad", district: "Ahmedabad", latitude: 23.0920, longitude: 72.5930, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam04", camera_id: "cam04", camera_name: "04 Paldi Circle", name: "04 Paldi Circle", department: "Home Department (Police)", location_name: "Paldi Cross Roads, Ahmedabad", district: "Ahmedabad", latitude: 23.0124, longitude: 72.5625, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam05", camera_id: "cam05", camera_name: "05 Visat teen Rasta", name: "05 Visat teen Rasta", department: "RTO Checkpost", location_name: "Visat Three Roads, Sabarmati, Ahmedabad", district: "Ahmedabad", latitude: 23.1020, longitude: 72.5910, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam06", camera_id: "cam06", camera_name: "06 Timbavadi gate-Junagadh", name: "06 Timbavadi gate-Junagadh", department: "Home Department (Police)", location_name: "Timbavadi Gate, Junagadh", district: "Junagadh", latitude: 21.5120, longitude: 70.4680, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam07", camera_id: "cam07", camera_name: "07 hero-showroom-gir-somnath", name: "07 hero-showroom-gir-somnath", department: "Home Department (Police)", location_name: "Veraval Highway, Gir Somnath", district: "Gir Somnath", latitude: 20.9020, longitude: 70.3710, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam08", camera_id: "cam08", camera_name: "08 majewadi-gate-junagadh", name: "08 majewadi-gate-junagadh", department: "Municipal Corporation", location_name: "Majewadi Gate, Junagadh", district: "Junagadh", latitude: 21.5280, longitude: 70.4590, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam09", camera_id: "cam09", camera_name: "09 new-bypass-near-by-circle-junagadh-2", name: "09 new-bypass-near-by-circle-junagadh-2", department: "RTO Checkpost", location_name: "New Bypass Circle, Junagadh", district: "Junagadh", latitude: 21.5410, longitude: 70.4720, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam10", camera_id: "cam10", camera_name: "10 char-chowk-road-2-junagadh", name: "10 char-chowk-road-2-junagadh", department: "Smart City VMS", location_name: "Char Chowk Road, Junagadh", district: "Junagadh", latitude: 21.5190, longitude: 70.4610, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam11", camera_id: "cam11", camera_name: "11 dolatpara-junagadh", name: "11 dolatpara-junagadh", department: "Home Department (Police)", location_name: "Dolatpara, Junagadh", district: "Junagadh", latitude: 21.5510, longitude: 70.4690, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam12", camera_id: "cam12", camera_name: "12 Tri Mandir Adalaj Tollnaka", name: "12 Tri Mandir Adalaj Tollnaka", department: "RTO Checkpost", location_name: "Adalaj Tollnaka, Gandhinagar", district: "Gandhinagar", latitude: 23.1680, longitude: 72.5810, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam13", camera_id: "cam13", camera_name: "13 CN Vidhyalaya", name: "13 CN Vidhyalaya", department: "Municipal Corporation", location_name: "CN Vidhyalaya Road, Ahmedabad", district: "Ahmedabad", latitude: 23.0280, longitude: 72.5480, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam14", camera_id: "cam14", camera_name: "14 Delight RLVD", name: "14 Delight RLVD", department: "Home Department (Police)", location_name: "Delight RLVD Crossroad, Ahmedabad", district: "Ahmedabad", latitude: 23.0380, longitude: 72.5520, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam15", camera_id: "cam15", camera_name: "15 Suvidha park", name: "15 Suvidha park", department: "Smart City VMS", location_name: "Suvidha Park, Ahmedabad", district: "Ahmedabad", latitude: 23.0190, longitude: 72.5390, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam16", camera_id: "cam16", camera_name: "16 Visat P2", name: "16 Visat P2", department: "Home Department (Police)", location_name: "Visat Perimeter 2, Ahmedabad", district: "Ahmedabad", latitude: 23.1040, longitude: 72.5925, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam17", camera_id: "cam17", camera_name: "17 Rajkot Bus Port CCTV", name: "17 Rajkot Bus Port CCTV", department: "Transport Dept", location_name: "Rajkot Central Bus Port", district: "Rajkot", latitude: 22.3010, longitude: 70.8010, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam18", camera_id: "cam18", camera_name: "18 Rajkot CCTV", name: "18 Rajkot CCTV", department: "Home Department (Police)", location_name: "Kasturba Road, Rajkot", district: "Rajkot", latitude: 22.3050, longitude: 70.7980, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam19", camera_id: "cam19", camera_name: "19 Khaparia Gram Panchayat", name: "19 Khaparia Gram Panchayat", department: "Home Department (Police)", location_name: "Gandevi, Navsari", district: "Navsari", latitude: 20.8410, longitude: 72.9810, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam20", camera_id: "cam20", camera_name: "20 Mohanpura", name: "20 Mohanpura", department: "Smart City VMS", location_name: "Mohanpura, Gandhinagar", district: "Gandhinagar", latitude: 23.2380, longitude: 72.6450, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam21", camera_id: "cam21", camera_name: "23 Patan Dethali Char Rasta", name: "23 Patan Dethali Char Rasta", department: "RTO Checkpost", location_name: "Dethali Cross Roads, Patan", district: "Patan", latitude: 23.8510, longitude: 72.1280, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam22", camera_id: "cam22", camera_name: "28 BK Mervada tran Rasta", name: "28 BK Mervada tran Rasta", department: "Home Department (Police)", location_name: "Mervada Three Roads, Banaskantha", district: "Banaskantha", latitude: 24.1720, longitude: 72.4380, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam23", camera_id: "cam23", camera_name: "30 kheram", name: "30 kheram", department: "Home Department (Police)", location_name: "Kheram Highway, Gujarat Corridor", district: "Gujarat Corridor", latitude: 22.4510, longitude: 71.8210, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam24", camera_id: "cam24", camera_name: "33 dehgam", name: "33 dehgam", department: "Municipal Corporation", location_name: "Dehgam Circle, Gandhinagar", district: "Gandhinagar", latitude: 23.1680, longitude: 72.8120, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam25", camera_id: "cam25", camera_name: "34 dhanori", name: "34 dhanori", department: "RTO Checkpost", location_name: "Dhanori Border Post, Navsari", district: "Navsari", latitude: 20.8910, longitude: 72.9510, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam26", camera_id: "cam26", camera_name: "35 TANKAL", name: "35 TANKAL", department: "Home Department (Police)", location_name: "Tankal Checkpoint, Navsari", district: "Navsari", latitude: 20.7810, longitude: 73.0120, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam27", camera_id: "cam27", camera_name: "36 bilimora", name: "36 bilimora", department: "Municipal Corporation", location_name: "Station Road, Bilimora, Navsari", district: "Navsari", latitude: 20.7610, longitude: 72.9680, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam28", camera_id: "cam28", camera_name: "37 bilimora", name: "37 bilimora", department: "Smart City VMS", location_name: "Main Bazar, Bilimora, Navsari", district: "Navsari", latitude: 20.7640, longitude: 72.9710, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam29", camera_id: "cam29", camera_name: "38 bilimora", name: "38 bilimora", department: "Home Department (Police)", location_name: "Coastal Highway, Bilimora, Navsari", district: "Navsari", latitude: 20.7680, longitude: 72.9750, codec: "H.264", resolution: "1080p", status: "online", vendor: "Sentinel Edge" },
+  { id: "cam30", camera_id: "cam30", camera_name: "Gandhidham Rambaugh p2", name: "Gandhidham Rambaugh p2", department: "Home Department (Police)", location_name: "Rambaugh Road, Gandhidham, Kutch", district: "Kutch", latitude: 23.0780, longitude: 70.1340, codec: "H.265", resolution: "4K", status: "online", vendor: "Sentinel Edge" },
+
+  // Statewide Regional Clusters
   { id: "CAM-GN-01", camera_id: "CAM-GN-01", camera_name: "Police Bhavan Gate 1", name: "Police Bhavan Gate 1", department: "Home Department (Police)", location_name: "Sector 18, Gandhinagar", district: "Gandhinagar", latitude: 23.2156, longitude: 72.6369, codec: "H.264", resolution: "1080p", status: "online", vendor: "CP Plus" },
   { id: "CAM-GN-02", camera_id: "CAM-GN-02", camera_name: "Mahatma Mandir Crossroad", name: "Mahatma Mandir Crossroad", department: "Home Department (Police)", location_name: "GH Road, Sector 13, Gandhinagar", district: "Gandhinagar", latitude: 23.2300, longitude: 72.6450, codec: "H.265", resolution: "1080p", status: "online", vendor: "Hikvision" },
   { id: "CAM-GN-03", camera_id: "CAM-GN-03", camera_name: "Infocity Circle North", name: "Infocity Circle North", department: "Home Department (Police)", location_name: "Infocity, Gandhinagar", district: "Gandhinagar", latitude: 23.1903, longitude: 72.6288, codec: "H.264", resolution: "4K", status: "online", vendor: "Dahua" },
-  { id: "CAM-GN-04", camera_id: "CAM-GN-04", camera_name: "RTO Gandhinagar Testing Track", name: "RTO Gandhinagar Testing Track", department: "RTO Gujarat", location_name: "Sector 28, Gandhinagar", district: "Gandhinagar", latitude: 23.2450, longitude: 72.6520, codec: "H.264", resolution: "1080p", status: "online", vendor: "CP Plus" },
-  { id: "CAM-GN-05", camera_id: "CAM-GN-05", camera_name: "Civil Supplies Godown Sector 25", name: "Civil Supplies Godown Sector 25", department: "Food & Civil Supplies", location_name: "GIDC Sector 25, Gandhinagar", district: "Gandhinagar", latitude: 23.2510, longitude: 72.6610, codec: "H.264", resolution: "720p", status: "online", vendor: "Hikvision" },
   { id: "CAM-AHM-01", camera_id: "CAM-AHM-01", camera_name: "Vaishno Devi Circle Northbound", name: "Vaishno Devi Circle Northbound", department: "Home Department (Police)", location_name: "SG Highway, Ahmedabad", district: "Ahmedabad", latitude: 23.1368, longitude: 72.5441, codec: "H.265", resolution: "4K", status: "online", vendor: "Hikvision" },
-  { id: "CAM-AHM-02", camera_id: "CAM-AHM-02", camera_name: "Gota Flyover Checkpoint", name: "Gota Flyover Checkpoint", department: "Home Department (Police)", location_name: "SG Highway, Gota, Ahmedabad", district: "Ahmedabad", latitude: 23.1090, longitude: 72.5360, codec: "H.264", resolution: "1080p", status: "online", vendor: "CP Plus" },
-  { id: "CAM-AHM-03", camera_id: "CAM-AHM-03", camera_name: "Thaltej Cross Road CCTV", name: "Thaltej Cross Road CCTV", department: "Municipal Corporation", location_name: "Thaltej, SG Highway, Ahmedabad", district: "Ahmedabad", latitude: 23.0515, longitude: 72.5098, codec: "H.264", resolution: "1080p", status: "online", vendor: "Dahua" },
   { id: "CAM-AHM-04", camera_id: "CAM-AHM-04", camera_name: "ISKCON Cross Road Flyover", name: "ISKCON Cross Road Flyover", department: "Home Department (Police)", location_name: "SG Highway, ISKCON, Ahmedabad", district: "Ahmedabad", latitude: 23.0278, longitude: 72.5065, codec: "H.265", resolution: "4K", status: "online", vendor: "Hikvision" },
-  { id: "CAM-AHM-05", camera_id: "CAM-AHM-05", camera_name: "Pakwan Cross Road East", name: "Pakwan Cross Road East", department: "Municipal Corporation", location_name: "Bodakdev, Ahmedabad", district: "Ahmedabad", latitude: 23.0370, longitude: 72.5150, codec: "H.264", resolution: "1080p", status: "online", vendor: "CP Plus" },
-  { id: "CAM-AHM-06", camera_id: "CAM-AHM-06", camera_name: "Shivranjani Cross Roads", name: "Shivranjani Cross Roads", department: "Home Department (Police)", location_name: "Satellite, Ahmedabad", district: "Ahmedabad", latitude: 23.0234, longitude: 72.5298, codec: "H.264", resolution: "1080p", status: "online", vendor: "Hikvision" },
-  { id: "CAM-AHM-07", camera_id: "CAM-AHM-07", camera_name: "Nehrunagar Circle Traffic Post", name: "Nehrunagar Circle Traffic Post", department: "Home Department (Police)", location_name: "Nehrunagar, Ambawadi, Ahmedabad", district: "Ahmedabad", latitude: 23.0189, longitude: 72.5442, codec: "H.264", resolution: "1080p", status: "online", vendor: "CP Plus" },
-  { id: "CAM-AHM-08", camera_id: "CAM-AHM-08", camera_name: "Paldi Cross Road Bridge", name: "Paldi Cross Road Bridge", department: "Municipal Corporation", location_name: "Paldi, Ahmedabad", district: "Ahmedabad", latitude: 23.0125, longitude: 72.5650, codec: "H.264", resolution: "1080p", status: "online", vendor: "Dahua" },
-  { id: "CAM-AHM-09", camera_id: "CAM-AHM-09", camera_name: "Geeta Mandir ST Bus Station", name: "Geeta Mandir ST Bus Station", department: "Home Department (Police)", location_name: "Geeta Mandir, Ahmedabad", district: "Ahmedabad", latitude: 23.0118, longitude: 72.5892, codec: "H.264", resolution: "1080p", status: "online", vendor: "Hikvision" },
   { id: "CAM-AHM-10", camera_id: "CAM-AHM-10", camera_name: "Narol Circle Toll Junction", name: "Narol Circle Toll Junction", department: "Home Department (Police)", location_name: "Narol-Sarkhej Highway, Ahmedabad", district: "Ahmedabad", latitude: 22.9734, longitude: 72.5925, codec: "H.265", resolution: "4K", status: "online", vendor: "Hikvision" },
-  { id: "CAM-VAD-01", camera_id: "CAM-VAD-01", camera_name: "Alkapuri Railway Underpass", name: "Alkapuri Railway Underpass", department: "Home Department (Police)", location_name: "Alkapuri, Vadodara", district: "Vadodara", latitude: 22.3106, longitude: 73.1812, codec: "H.264", resolution: "1080p", status: "online", vendor: "Hikvision" },
-  { id: "CAM-VAD-02", camera_id: "CAM-VAD-02", camera_name: "Genda Circle North", name: "Genda Circle North", department: "Municipal Corporation", location_name: "Sayajiganj, Vadodara", district: "Vadodara", latitude: 22.3200, longitude: 73.1750, codec: "H.264", resolution: "1080p", status: "online", vendor: "Dahua" },
-  { id: "CAM-SUR-01", camera_id: "CAM-SUR-01", camera_name: "Athwa Gate Junction", name: "Athwa Gate Junction", department: "Home Department (Police)", location_name: "Athwa Lines, Surat", district: "Surat", latitude: 21.1835, longitude: 72.8124, codec: "H.265", resolution: "4K", status: "online", vendor: "Hikvision" },
-  { id: "CAM-SUR-02", camera_id: "CAM-SUR-02", camera_name: "Majura Gate Intersection", name: "Majura Gate Intersection", department: "Municipal Corporation", location_name: "Ring Road, Surat", district: "Surat", latitude: 21.1765, longitude: 72.8220, codec: "H.264", resolution: "1080p", status: "online", vendor: "Dahua" },
-  { id: "CAM-SUR-05", camera_id: "CAM-SUR-05", camera_name: "Kamrej Toll Plaza Entry", name: "Kamrej Toll Plaza Entry", department: "Home Department (Police)", location_name: "NH-48 Kamrej, Surat", district: "Surat", latitude: 21.2720, longitude: 72.9650, codec: "H.265", resolution: "4K", status: "online", vendor: "Hikvision" },
-  { id: "CAM-RAJ-01", camera_id: "CAM-RAJ-01", camera_name: "Trikon Baug Traffic Post", name: "Trikon Baug Traffic Post", department: "Home Department (Police)", location_name: "Civil Hospital Road, Rajkot", district: "Rajkot", latitude: 22.3025, longitude: 70.8015, codec: "H.264", resolution: "1080p", status: "online", vendor: "CP Plus" },
-  { id: "CAM-RAJ-02", camera_id: "CAM-RAJ-02", camera_name: "Madhapar Chowkdi Ring Road", name: "Madhapar Chowkdi Ring Road", department: "Municipal Corporation", location_name: "150 Feet Ring Road, Rajkot", district: "Rajkot", latitude: 22.3350, longitude: 70.7720, codec: "H.265", resolution: "1080p", status: "online", vendor: "Hikvision" },
-  { id: "CAM-KUT-01", camera_id: "CAM-KUT-01", camera_name: "Samakhiali Toll Plaza (Kutch)", name: "Samakhiali Toll Plaza (Kutch)", department: "Home Department (Police)", location_name: "NH-41 Samakhiali, Kutch", district: "Kutch", latitude: 23.3150, longitude: 70.5280, codec: "H.265", resolution: "4K", status: "online", vendor: "Hikvision" },
-  { id: "CAM-BHV-01", camera_id: "CAM-BHV-01", camera_name: "Bhavnagar Alang Shipyard Entry", name: "Bhavnagar Alang Shipyard Entry", department: "Home Department (Police)", location_name: "Alang, Bhavnagar", district: "Bhavnagar", latitude: 21.4120, longitude: 72.1950, codec: "H.264", resolution: "1080p", status: "online", vendor: "Hikvision" }
+  { id: "CAM-SUR-05", camera_id: "CAM-SUR-05", camera_name: "Kamrej Toll Plaza Entry", name: "Kamrej Toll Plaza Entry", department: "Home Department (Police)", location_name: "NH-48 Kamrej, Surat", district: "Surat", latitude: 21.2720, longitude: 72.9650, codec: "H.265", resolution: "4K", status: "online", vendor: "Hikvision" }
 ];
 
 export const FALLBACK_WATCHLIST = [
@@ -40,6 +56,65 @@ export const FALLBACK_ALERTS = [
   { id: "ALT-01", plate_number: "GJ01AB1234", camera_id: "CAM-AHM-10", camera_name: "Narol Circle Toll Junction", location_name: "Narol-Sarkhej Highway, Ahmedabad", timestamp: new Date().toISOString(), offence_type: "Stolen Vehicle / Armed Robbery", priority: "CRITICAL", status: "NEW" },
   { id: "ALT-02", plate_number: "GJ01AB1234", camera_id: "CAM-AHM-04", camera_name: "ISKCON Cross Road Flyover", location_name: "SG Highway, ISKCON, Ahmedabad", timestamp: new Date(Date.now() - 15*60000).toISOString(), offence_type: "Stolen Vehicle / Armed Robbery", priority: "CRITICAL", status: "ACKNOWLEDGED" },
   { id: "ALT-03", plate_number: "GJ05XY9999", camera_id: "CAM-SUR-05", camera_name: "Kamrej Toll Plaza Entry", location_name: "NH-48 Kamrej, Surat", timestamp: new Date(Date.now() - 45*60000).toISOString(), offence_type: "Wanted Criminal / Smuggling", priority: "CRITICAL", status: "NEW" }
+];
+
+export const FALLBACK_CERTIFICATES = [
+  {
+    certificate_id: "CERT-BSA2023-001",
+    detection_id: "DET-GJ01-5",
+    license_plate: "GJ01AB1234",
+    camera_id: "cam14",
+    violation_type: "WATCHLIST_CRITICAL_INTERCEPT",
+    speed_recorded_kmh: 65.0,
+    speed_limit_kmh: 80.0,
+    fine_amount_inr: 5000,
+    sha256_hash: "a4f899e03d4411fbce284820cbb105e492cb71a3962d80d19d690a2be28ff2c1",
+    bsa_admissibility_code: "BSA-2023-SEC63-CERTIFIED",
+    issued_at: new Date(Date.now() - 18 * 60000).toISOString(),
+    status: "ISSUED"
+  },
+  {
+    certificate_id: "CERT-BSA2023-002",
+    detection_id: "DET-GJ01-7",
+    license_plate: "GJ01AB1234",
+    camera_id: "cam01",
+    violation_type: "INTER_CAMERA_SPEED_VIOLATION",
+    speed_recorded_kmh: 92.5,
+    speed_limit_kmh: 80.0,
+    fine_amount_inr: 2000,
+    sha256_hash: "7f4c9c1b96d9cf88ef492d3fbe2e921d33458db4f895c479426f499694e9f3b1",
+    bsa_admissibility_code: "BSA-2023-SEC63-CERTIFIED",
+    issued_at: new Date(Date.now() - 40 * 60000).toISOString(),
+    status: "ISSUED"
+  },
+  {
+    certificate_id: "CERT-BSA2023-003",
+    detection_id: "DET-BG-6",
+    license_plate: "GJ05XY9999",
+    camera_id: "cam06",
+    violation_type: "WATCHLIST_CRITICAL_INTERCEPT",
+    speed_recorded_kmh: 68.0,
+    speed_limit_kmh: 80.0,
+    fine_amount_inr: 5000,
+    sha256_hash: "3d9142c2d43fccd04ea89255a62bb1e2c9447d283627ba7592cf6d82260ff288",
+    bsa_admissibility_code: "BSA-2023-SEC63-CERTIFIED",
+    issued_at: new Date(Date.now() - 75 * 60000).toISOString(),
+    status: "ISSUED"
+  },
+  {
+    certificate_id: "CERT-BSA2023-004",
+    detection_id: "DET-GEN-1",
+    license_plate: "GJ01HY5842",
+    camera_id: "cam04",
+    violation_type: "SPEED_VIOLATION",
+    speed_recorded_kmh: 89.2,
+    speed_limit_kmh: 80.0,
+    fine_amount_inr: 2000,
+    sha256_hash: "982ef37b4200ea8b7194605938bf8c83a812df934f828a504312674fae7b99c0",
+    bsa_admissibility_code: "BSA-2023-SEC63-CERTIFIED",
+    issued_at: new Date(Date.now() - 110 * 60000).toISOString(),
+    status: "ISSUED"
+  }
 ];
 
 export const FALLBACK_ROUTE_GJ01 = {

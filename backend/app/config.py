@@ -10,10 +10,18 @@ SNAPSHOTS_DIR.mkdir(parents=True, exist_ok=True)
 
 DB_PATH = DATA_DIR / "sentinel.db"
 
-# Sentinel Sandbox Settings
-SENTINEL_SANDBOX_HOST = os.getenv("SENTINEL_SANDBOX_HOST", "https://sentinel.gujarat.gov.in")
-SENTINEL_INGEST_API = f"{SENTINEL_SANDBOX_HOST}/api/ingest"
+# Sentinel Grid Settings & Official Credentials
+SENTINEL_EMAIL = os.getenv("SENTINEL_EMAIL", "nateshnkraja@gmail.com")
+SENTINEL_PASS = os.getenv("SENTINEL_PASS", "NYYR-SQ5F-TQ7N")
+SENTINEL_HOST = os.getenv("SENTINEL_HOST", "https://cctv.corp8.cloud")
+SENTINEL_RTSP_IP = os.getenv("SENTINEL_RTSP_IP", "103.250.160.189")
+SENTINEL_RTSP_PORT = int(os.getenv("SENTINEL_RTSP_PORT", "8554"))
+SENTINEL_SANDBOX_HOST = os.getenv("SENTINEL_SANDBOX_HOST", "https://cctv.corp8.cloud")
+SENTINEL_INGEST_API = f"{SENTINEL_HOST}/cameras.json"
 RTSP_TRANSPORT = "tcp"
+
+# Force RTSP over TCP for OpenCV
+os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;tcp"
 
 # Server Host & Port
 API_HOST = os.getenv("HOST", "0.0.0.0")

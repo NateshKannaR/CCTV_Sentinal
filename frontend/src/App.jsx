@@ -19,6 +19,7 @@ import VehicleTracePage from './pages/VehicleTracePage';
 import WatchlistPage from './pages/WatchlistPage';
 import ScalePage from './pages/ScalePage';
 import IntegratorPage from './pages/IntegratorPage';
+import EvidenceVaultPage from './pages/EvidenceVaultPage';
 
 // Offline & Vercel Resilient Data Fallbacks
 import { 
@@ -331,6 +332,10 @@ export default function App() {
               <Route
                 path="/scale"
                 element={<ScalePage />}
+              />
+              <Route
+                path="/evidence"
+                element={<EvidenceVaultPage />}
               />
               <Route
                 path="/integrator"

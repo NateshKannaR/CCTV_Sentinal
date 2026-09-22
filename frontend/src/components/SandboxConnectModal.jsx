@@ -3,7 +3,8 @@ import { Cloud, CheckCircle, AlertTriangle, Key, ExternalLink, RefreshCw, Radio 
 
 export default function SandboxConnectModal({ isOpen, onClose }) {
   const [gatewayHost, setGatewayHost] = useState('https://cctv.corp8.cloud');
-  const [authToken, setAuthToken] = useState('');
+  const [authEmail, setAuthEmail] = useState('nateshnkraja@gmail.com');
+  const [authToken, setAuthToken] = useState('NYYR-SQ5F-TQ7N');
   const [testing, setTesting] = useState(false);
   const [result, setResult] = useState(null);
 
@@ -16,7 +17,7 @@ export default function SandboxConnectModal({ isOpen, onClose }) {
     fetch('/api/sentinel/connect-sandbox', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ host: gatewayHost, token: authToken })
+      body: JSON.stringify({ host: gatewayHost, email: authEmail, password: authToken })
     })
       .then(res => res.json())
       .then(data => {
@@ -73,15 +74,26 @@ export default function SandboxConnectModal({ isOpen, onClose }) {
           </div>
 
           <div>
+            <label className="font-semibold text-slate-300 block mb-1">Registered Email ID</label>
+            <input
+              type="email"
+              value={authEmail}
+              onChange={(e) => setAuthEmail(e.target.value)}
+              placeholder="e.g. nateshnkraja@gmail.com"
+              className="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-white font-mono focus:outline-none focus:border-blue-500"
+            />
+          </div>
+
+          <div>
             <label className="font-semibold text-slate-300 block mb-1">
-              System-Issued Access Password / Token
+              System-Issued Access Password
             </label>
             <div className="relative">
               <input
-                type="password"
+                type="text"
                 value={authToken}
                 onChange={(e) => setAuthToken(e.target.value)}
-                placeholder="Enter password received from cctv.corp8.cloud"
+                placeholder="NYYR-SQ5F-TQ7N"
                 className="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-white font-mono focus:outline-none focus:border-blue-500 pr-10"
               />
               <Key className="w-4 h-4 text-slate-500 absolute right-3 top-2.5" />
